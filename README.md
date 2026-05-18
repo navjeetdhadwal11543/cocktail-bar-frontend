@@ -16,8 +16,8 @@ The deployed demo runs in **mock mode** — no backend required. Every feature (
 - 💳 Checkout flow that builds a real backend order payload
 - 📊 Admin dashboard with live order polling (5 s interval)
   - KPI cards: operators, waiters, barmen, menu, warehouse
-  - **Popular Drinks** bar chart (top 8) + **Order Status** pie chart
-  - Recent orders table (last 15)
+  - **Popular Drinks** bar chart + **Order Status** pie chart
+  - Recent orders table
 - 🔐 Token + refresh-token auth flow against a Django backend (when configured)
 - 🧪 Automatic fallback to mock data if no backend URL is set
 
