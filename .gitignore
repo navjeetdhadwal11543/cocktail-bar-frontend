@@ -8,6 +8,7 @@
 # Environment variables — never commit secrets
 .env
 .env.*
+.env.production
 
 # Testing
 /coverage
