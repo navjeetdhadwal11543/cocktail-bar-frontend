@@ -10,16 +10,16 @@ The deployed demo runs in **mock mode** — no backend required. Every feature (
 
 ## ✨ Features
 
-- 🥃 Browse a drink menu with images, descriptions and prices
-- ⚙️ Customise drinks (mint / garnish / etc.) and add multiple variations to a single cart entry
-- 🛒 Cart persists across page navigation via `sessionStorage`
-- 💳 Checkout flow that builds a real backend order payload
-- 📊 Admin dashboard with live order polling (5 s interval)
-  - KPI cards: operators, waiters, barmen, menu, warehouse
-  - **Popular Drinks** bar chart + **Order Status** pie chart
-  - Recent orders table
-- 🔐 Token + refresh-token auth flow against a Django backend (when configured)
-- 🧪 Automatic fallback to mock data if no backend URL is set
+- Browse a drink menu with images, descriptions
+- Customise drinks (mint / garnish / etc.) and add multiple variations to a single cart entry
+- Cart persists across page navigation via `sessionStorage`
+- Checkout flow that builds a real backend order payload
+- Admin dashboard with live order polling (5 s interval)
+- KPI cards: operators, waiters, barmen, menu, warehouse
+- **Popular Drinks** bar chart + **Order Status** pie chart
+- Recent orders table
+- Token + refresh-token auth flow against a Django backend (can be configured with the backend for auth by token)
+- Automatic fallback to mock data if no backend URL is set
 
 ---
 
@@ -31,7 +31,7 @@ The deployed demo runs in **mock mode** — no backend required. Every feature (
 - **Chart.js** + **react-chartjs-2**
 - **Axios** for API calls
 - **Jest** + **React Testing Library**
-- **ESLint** (Airbnb config) + **Prettier**
+- **ESLint** + **Prettier**
 - **Create React App** build
 
 ---
@@ -92,8 +92,6 @@ Copy `.env.example` to `.env` and adjust.
 | `REACT_APP_API_USER` | Backend username (only when `REACT_APP_API_URL` is set) | —                |
 | `REACT_APP_API_PASS` | Backend password (only when `REACT_APP_API_URL` is set) | —                |
 | `REACT_APP_TABLE_ID` | Numeric ID of the table this client represents          | `1`              |
-
-> ⚠️ Any `REACT_APP_*` variable is **inlined into the public JavaScript bundle** by CRA. They are _not_ secret — anyone visiting your deployed site can read them. Real credentials must live on a backend.
 
 ---
 
