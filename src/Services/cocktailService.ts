@@ -11,7 +11,7 @@ import {
 
 // --- Base URL ---
 const API_URL = process.env.REACT_APP_API_URL;
-// When no backend URL is configured (e.g. demo build on Netlify) the service
+// When no backend URL is configured () the service
 // returns local sample data instead of calling axios.
 const isRealUrl = (u?: string) => !!u && /^https?:\/\/[^/\s]+/i.test(u.trim());
 export const USE_MOCK = !isRealUrl(API_URL);
