@@ -2,7 +2,7 @@
 
 A React + TypeScript single-page application for browsing a cocktail menu, customising drinks, placing orders, and managing the back-office from an admin dashboard.
 
-> **Live demo:**
+> \*_Live demo:_https://cocktailbarfrontend.netlify.app/*
 
 The deployed demo runs in **mock mode** — no backend required. Every feature (cart, checkout, dashboard charts, recent orders) works end-to-end against local sample data.
 
