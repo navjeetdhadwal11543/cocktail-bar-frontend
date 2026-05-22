@@ -44,16 +44,21 @@ interface Props {
 }
 
 const RecentOrdersTable: React.FC<Props> = ({ orders, totalCount }) => (
-  <Box sx={{ mt: 5 }}>
+  <Box sx={{ mt: { xs: 3, md: 5 } }}>
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'baseline',
+        flexWrap: 'wrap',
+        gap: 1,
         mb: 2,
       }}
     >
-      <Typography variant='h5' sx={{ fontWeight: 'bold' }}>
+      <Typography
+        variant='h5'
+        sx={{ fontWeight: 'bold', fontSize: { xs: '1.15rem', md: '1.5rem' } }}
+      >
         Recent Orders
       </Typography>
       {typeof totalCount === 'number' && totalCount > orders.length && (
@@ -62,15 +67,18 @@ const RecentOrdersTable: React.FC<Props> = ({ orders, totalCount }) => (
         </Typography>
       )}
     </Box>
-    <TableContainer component={Paper} sx={{ borderRadius: 3 }}>
-      <Table>
+    <TableContainer
+      component={Paper}
+      sx={{ borderRadius: 3, overflowX: 'auto' }}
+    >
+      <Table size='small' sx={{ minWidth: 600 }}>
         <TableHead>
           <TableRow sx={{ background: '#f5f5f5' }}>
-            <TableCell>Order Id</TableCell>
-            <TableCell>Table</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Created At</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>Order Id</TableCell>
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>Table</TableCell>
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>Status</TableCell>
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>Created At</TableCell>
+            <TableCell sx={{ whiteSpace: 'nowrap' }}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -85,10 +93,14 @@ const RecentOrdersTable: React.FC<Props> = ({ orders, totalCount }) => (
               <TableRow key={order.id}>
                 <TableCell>{order.id ?? 'N/A'}</TableCell>
                 <TableCell>{order.id_table ?? 'N/A'}</TableCell>
-                <TableCell sx={{ color: statusColor(order.status) }}>
+                <TableCell
+                  sx={{ color: statusColor(order.status), whiteSpace: 'nowrap' }}
+                >
                   {statusMap[order.status ?? 0]}
                 </TableCell>
-                <TableCell>{formatDate(order.created_at)}</TableCell>
+                <TableCell sx={{ whiteSpace: 'nowrap' }}>
+                  {formatDate(order.created_at)}
+                </TableCell>
                 <TableCell>
                   {order.drinks && order.drinks.length > 0
                     ? order.drinks

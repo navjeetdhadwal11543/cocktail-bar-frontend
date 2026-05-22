@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Bar, Pie } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -48,6 +48,9 @@ const DashboardOverview: React.FC<Props> = ({
   warehouseCount,
   orders,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const operatorsByRole = (role: Operator['role']) =>
     operators.filter((op) => op.role === role).length;
 
@@ -117,9 +120,9 @@ const DashboardOverview: React.FC<Props> = ({
 
   return (
     <>
-      <Grid container spacing={3} sx={{ mb: 4 }}>
+      <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }} sx={{ mb: { xs: 2, md: 4 } }}>
         {cards.map((card, i) => (
-          <Grid item xs={12} sm={6} md={3} key={card.title}>
+          <Grid item xs={6} sm={6} md={3} key={card.title}>
             <DashboardCard
               title={card.title}
               value={card.value}
@@ -129,30 +132,33 @@ const DashboardOverview: React.FC<Props> = ({
         ))}
       </Grid>
 
-      <Grid container spacing={4} sx={{ mb: 4 }}>
+      <Grid container spacing={{ xs: 2, md: 4 }} sx={{ mb: { xs: 2, md: 4 } }}>
         <Grid item xs={12} md={6}>
           <Box
             sx={{
               bgcolor: '#fff3e0',
-              p: 3,
+              p: { xs: 1.5, md: 3 },
               borderRadius: 3,
               boxShadow: 3,
-              height: 350,
+              height: { xs: 260, md: 350 },
               display: 'flex',
               flexDirection: 'column',
             }}
           >
-            <Typography variant='h5' sx={{ mb: 2, fontWeight: 'bold' }}>
+            <Typography
+              variant={isMobile ? 'h6' : 'h5'}
+              sx={{ mb: { xs: 1, md: 2 }, fontWeight: 'bold' }}
+            >
               Popular Drinks
             </Typography>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1, minHeight: 0 }}>
               <Bar
                 data={barData}
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
                   plugins: {
-                    legend: { position: 'top' },
+                    legend: { position: 'top', display: !isMobile },
                     title: {
                       display: popularDrinks.length === 0,
                       text: 'No orders yet',
@@ -160,7 +166,12 @@ const DashboardOverview: React.FC<Props> = ({
                   },
                   scales: {
                     x: {
-                      ticks: { autoSkip: false, maxRotation: 45, minRotation: 0 },
+                      ticks: {
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: isMobile ? 45 : 0,
+                        font: { size: isMobile ? 9 : 12 },
+                      },
                     },
                     y: { beginAtZero: true, ticks: { precision: 0 } },
                   },
@@ -173,18 +184,21 @@ const DashboardOverview: React.FC<Props> = ({
           <Box
             sx={{
               bgcolor: '#fff3e0',
-              p: 3,
+              p: { xs: 1.5, md: 3 },
               borderRadius: 3,
               boxShadow: 3,
-              height: 350,
+              height: { xs: 260, md: 350 },
               display: 'flex',
               flexDirection: 'column',
             }}
           >
-            <Typography variant='h5' sx={{ mb: 2, fontWeight: 'bold' }}>
+            <Typography
+              variant={isMobile ? 'h6' : 'h5'}
+              sx={{ mb: { xs: 1, md: 2 }, fontWeight: 'bold' }}
+            >
               Orders Status
             </Typography>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1, minHeight: 0 }}>
               <Pie
                 data={pieData}
                 options={{
@@ -192,8 +206,12 @@ const DashboardOverview: React.FC<Props> = ({
                   maintainAspectRatio: false,
                   plugins: {
                     legend: {
-                      position: 'right',
-                      labels: { boxWidth: 20, padding: 15 },
+                      position: isMobile ? 'bottom' : 'right',
+                      labels: {
+                        boxWidth: isMobile ? 12 : 20,
+                        padding: isMobile ? 8 : 15,
+                        font: { size: isMobile ? 11 : 12 },
+                      },
                     },
                   },
                 }}

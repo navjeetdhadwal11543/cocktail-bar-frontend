@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Navbar from '../Components/Navbar';
 import DashboardSidebar, {
   DashboardTab,
@@ -14,8 +14,10 @@ import { useOrders } from '../contexts/OrdersContext';
 import { Operator } from '../interfaces/Drink';
 
 const DashboardPage: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [activeTab, setActiveTab] = useState<DashboardTab>('dashboard');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
 
   const { operators, menu, warehouse, refresh } = useDashboardData();
   const { fetchOrders } = usePolledOrders(5000);
@@ -23,6 +25,11 @@ const DashboardPage: React.FC = () => {
 
   const byRole = (role: Operator['role']) =>
     operators.filter((op) => op.role === role);
+
+  const handleTabChange = (tab: DashboardTab) => {
+    setActiveTab(tab);
+    if (isMobile) setSidebarOpen(false);
+  };
 
   return (
     <>
@@ -42,16 +49,26 @@ const DashboardPage: React.FC = () => {
       >
         <DashboardSidebar
           activeTab={activeTab}
-          onTabChange={setActiveTab}
+          onTabChange={handleTabChange}
           open={sidebarOpen}
           onToggle={() => setSidebarOpen((p) => !p)}
           onRefresh={() => {
             refresh();
             fetchOrders();
           }}
+          isMobile={isMobile}
         />
 
-        <Box sx={{ flexGrow: 1, ml: '240px', p: 4, overflowY: 'auto' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            ml: { xs: 0, md: '240px' },
+            p: { xs: 1.5, sm: 2, md: 4 },
+            overflowY: 'auto',
+            width: '100%',
+            minWidth: 0,
+          }}
+        >
           {activeTab === 'dashboard' && (
             <DashboardOverview
               operators={operators}
